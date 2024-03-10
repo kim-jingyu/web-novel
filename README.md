@@ -1,1 +1,1 @@
-# web-novel
+# web-novel.psh
