@@ -1,7 +1,7 @@
 package com.webnovel.round.domain.repository;
 
 import com.webnovel.round.domain.Round;
-import com.webnovel.round.domain.exception.RoundNonFoundException;
+import com.webnovel.round.exception.RoundNonFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoundRepository extends JpaRepository<Round, Long> {

@@ -1,7 +1,5 @@
-package com.webnovel.round.domain.service;
+package com.webnovel.round.service;
 
-import com.webnovel.round.domain.Round;
-import com.webnovel.round.domain.repository.RoundRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +8,4 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class RoundService {
-    private final RoundRepository roundRepository;
-
 }
