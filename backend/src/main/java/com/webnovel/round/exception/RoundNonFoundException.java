@@ -1,4 +1,4 @@
-package com.webnovel.round.domain.exception;
+package com.webnovel.round.exception;
 
 import com.webnovel.global.exception.ErrorCode;
 import com.webnovel.global.exception.WebnovelException;
