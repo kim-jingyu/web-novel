@@ -12,8 +12,14 @@ import org.hibernate.annotations.ColumnDefault;
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Novel extends BaseEntity {
+
+    public Novel(Long writerId, String cover, String content) {
+        this.writerId = writerId;
+        this.cover = cover;
+        this.content = content;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,15 +28,15 @@ public class Novel extends BaseEntity {
     @Column(nullable = false)
     private Long writerId;
 
-    @Column
+    @Column(nullable = false)
     private String cover;
 
-    @Column
+    @Column(nullable = false)
     private String content;
 
     @Column
     private Long view;
 
-    @ColumnDefault("0")
-    private Long subscribe;
+    @Column
+    private Long subscribe=0L;
 }
