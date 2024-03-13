@@ -41,4 +41,7 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recommend> recommends = new ArrayList<>();
 
+    public void updateName(String name) {
+        this.name = name;
+    }
 }
