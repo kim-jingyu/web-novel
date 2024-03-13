@@ -8,12 +8,12 @@ import lombok.Data;
 
 import java.util.List;
 
-@Builder
 @Data
-public class GenreDto {
+@Builder
+public class CreateGenreDto {
+    private final Long genreId;
     @NotNull
     private final Novel novel;
     @NotNull
-    GenreType genreTypes;
-
+    private final List<GenreType> genreTypes;
 }

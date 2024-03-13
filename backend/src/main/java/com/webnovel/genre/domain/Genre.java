@@ -22,9 +22,9 @@ public class Genre {
     private Novel novel;
 
     @Column
-    private GenreType genreTypes;
+    private List<GenreType> genreTypes;
 
-    public Genre(Novel novel, GenreType genreTypes) {
+    public Genre(Novel novel, List<GenreType> genreTypes) {
         this.novel = novel;
         this.genreTypes = genreTypes;
     }

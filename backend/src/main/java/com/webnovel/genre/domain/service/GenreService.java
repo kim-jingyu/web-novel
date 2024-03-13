@@ -1,6 +1,7 @@
 package com.webnovel.genre.domain.service;
 
 import com.webnovel.genre.domain.Genre;
+import com.webnovel.genre.domain.dto.CreateGenreDto;
 import com.webnovel.genre.domain.dto.GenreDto;
 import com.webnovel.genre.domain.repository.GenreRepository;
 import com.webnovel.novel.domain.Novel;
@@ -14,12 +15,13 @@ public class GenreService {
         this.genreRepository = genreRepository;
     }
 
-    public Genre findBynovel(Novel novel){
-        Genre byNovelId = genreRepository.findByNovel(novel);
+    public Genre findBynovel(GenreDto genreDto){
+        Genre byNovelId = genreRepository.findByNovel(genreDto.getNovel());
         return byNovelId;
     }
 
-    public void save(Genre genre){
+    public void save(CreateGenreDto createGenreDto){
+        Genre genre = new Genre(createGenreDto.getNovel(), createGenreDto.getGenreTypes());
         genreRepository.save(genre);
     }
 }
