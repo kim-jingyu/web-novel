@@ -35,7 +35,7 @@ public class Novel extends BaseEntity {
     private String content;
 
     @Column
-    private Long view;
+    private Long view=0L;
 
     @Column
     private Long subscribe=0L;

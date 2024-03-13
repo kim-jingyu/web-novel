@@ -3,17 +3,18 @@ package com.webnovel.novel.domain.service;
 import com.webnovel.comment.exception.LengthOverException;
 import com.webnovel.novel.domain.Novel;
 import com.webnovel.novel.domain.dto.CreateNovelDto;
+import com.webnovel.novel.domain.dto.ModifyContentDto;
+import com.webnovel.novel.domain.dto.SubscribeAndViewDto;
 import com.webnovel.novel.domain.exception.ContentNotFoundException;
 import com.webnovel.novel.domain.exception.CoverNotFoundException;
 import com.webnovel.novel.domain.exception.NotFoundNovelException;
+import com.webnovel.novel.domain.exception.UnderBoundaryException;
 import com.webnovel.novel.domain.repository.NovelRepository;
-import com.webnovel.subscribe.domain.repository.SubscribeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = false)
@@ -59,26 +60,34 @@ public class NovelService {
         return novel;
     }
 
-    public void addContent(Novel novel, String content){
-        novel.setContent(content);
-        save(novel);
+    public void modifyContent(ModifyContentDto modifyContentDto, String content){
+        Novel byNovelId = novelRepository.findByNovelId(modifyContentDto.getNovelId());
+        byNovelId.setContent(content);
+        save(byNovelId);
     }
 
-    public void plusSubscribe(Novel novel){
-        long plus = novel.getSubscribe() + 1;
-        novel.setSubscribe(plus);
-        save(novel);
+    public void plusSubscribe(SubscribeAndViewDto subscribeAndViewDto){
+        Novel byNovelId = novelRepository.findByNovelId(subscribeAndViewDto.getNovelId());
+        long plus = byNovelId.getSubscribe() + 1;
+        byNovelId.setSubscribe(plus);
+        save(byNovelId);
     }
 
-    public void minusSubscribe(Novel novel){
-        long minus = novel.getSubscribe() -1 ;
-        novel.setSubscribe(minus);
-        save(novel);
+    public void minusSubscribe(SubscribeAndViewDto subscribeAndViewDto){
+        Novel byNovelId = novelRepository.findByNovelId(subscribeAndViewDto.getNovelId());
+        long minus = byNovelId.getSubscribe() - 1;
+
+        if(minus < 0 ){
+            throw new UnderBoundaryException();
+        }
+        byNovelId.setSubscribe(minus);
+        save(byNovelId);
     }
 
-    public void plusView(Novel novel){
-        novel.setView(novel.getView()+1);
-        save(novel);
+    public void plusView(SubscribeAndViewDto subscribeAndViewDto){
+        Novel byNovelId = novelRepository.findByNovelId(subscribeAndViewDto.getNovelId());
+        byNovelId.setView(byNovelId.getView() + 1);
+        save(byNovelId);
     }
 
 }
