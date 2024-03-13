@@ -9,6 +9,6 @@ import lombok.Data;
 public class SubscribeActivateDto {
     @NotNull
     private final Long memberId;
-    // @NotNull
-    // private final Long novelId;
+    @NotNull
+    private final Long novelId;
 }
