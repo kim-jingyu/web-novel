@@ -1,5 +1,8 @@
 package com.webnovel.comment.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.webnovel.comment.domain.Comment;
@@ -9,6 +12,9 @@ import com.webnovel.member.domain.Member;
 import com.webnovel.round.domain.Round;
 import com.webnovel.comment.dto.CommentCreateDto;
 import com.webnovel.comment.dto.CommentDeleteDto;
+import com.webnovel.comment.dto.CommentsPageRequestDto;
+import com.webnovel.comment.dto.CommentsRequestDto;
+import com.webnovel.comment.dto.CommentsResponseDto;
 import com.webnovel.comment.exception.LengthOverException;
 import com.webnovel.comment.exception.LengthUnderException;
 import com.webnovel.member.domain.repository.MemberRepository;
@@ -16,6 +22,8 @@ import com.webnovel.round.domain.repository.RoundRepository;
 
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -44,5 +52,23 @@ public class CommentService {
         commentRepository.delete(
             commentRepository.getById(request.getCommentId())
         );
+    }
+
+    public List<CommentsResponseDto> getCommentsWithName(CommentsRequestDto request) {
+        return commentRepository.findAllByRound_RoundId(request.getRoundId());
+    }
+
+    public List<Comment> getComments(CommentsRequestDto request) {
+        return commentRepository.findByRound_RoundId(request.getRoundId());
+    }
+
+    public Page<CommentsResponseDto> getCommentsPageWithName(CommentsPageRequestDto request) {
+        Pageable pageable = PageRequest.of(request.getOffset(), 10);
+        return commentRepository.findAllByRound_RoundId(request.getRoundId(), pageable);
+    }
+
+    public Page<Comment> getCommentsPage(CommentsPageRequestDto request) {
+        Pageable pageable = PageRequest.of(request.getOffset(), 10);
+        return commentRepository.findByRound_RoundId(request.getRoundId(), pageable);
     }
 }

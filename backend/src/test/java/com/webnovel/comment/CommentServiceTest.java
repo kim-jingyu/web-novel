@@ -4,6 +4,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import com.webnovel.member.domain.Member;
 import com.webnovel.member.domain.Role;
@@ -15,6 +18,7 @@ import com.webnovel.comment.domain.Comment;
 import com.webnovel.comment.domain.repository.CommentRepository;
 import com.webnovel.comment.dto.CommentCreateDto;
 import com.webnovel.comment.dto.CommentDeleteDto;
+import com.webnovel.comment.dto.CommentsResponseDto;
 import com.webnovel.comment.exception.CommentNotFoundException;
 import com.webnovel.comment.exception.LengthOverException;
 import com.webnovel.comment.exception.LengthUnderException;
@@ -25,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Random;
 import java.util.Optional;
+import java.util.List;
 
 @SpringBootTest
 public class CommentServiceTest {
@@ -258,5 +263,127 @@ public class CommentServiceTest {
         // then
         assertThatThrownBy(() -> commentService.deleteComment(request))
             .isInstanceOf(CommentNotFoundException.class);
+    }
+
+    @Test
+    @DisplayName("댓글 목록 가져오기")
+    void caseGetAllComments() { 
+         // given
+        Round round = Round.builder()
+            .likes(0)
+            .roundNum(1)
+            .name("회차1")
+            .content("내용")
+            .build();
+        Round savedRound = roundRepository.save(round);
+
+        Member member1 = Member.builder()
+            .email("user@email.com")
+            .name("user")
+            .password("1234")
+            .role(Role.USER)
+            .money(1000)
+            .build();
+        Member savedMember1= memberRepository.save(member1);
+
+        Member member2 = Member.builder()
+        .email("user@email.com")
+        .name("user2")
+        .password("1234")
+        .role(Role.USER)
+        .money(1000)
+        .build();
+        Member savedMember2 = memberRepository.save(member2);
+
+        CommentCreateDto request_1 = CommentCreateDto.builder()
+            .memberId(savedMember1.getMemberId())
+            .roundId(savedRound.getRoundId())
+            .content("comment1")
+            .build();
+        commentService.createComment(request_1);
+
+        CommentCreateDto request_2 = CommentCreateDto.builder()
+        .memberId(savedMember2.getMemberId())
+        .roundId(savedRound.getRoundId())
+        .content("comment2")
+        .build();
+        commentService.createComment(request_2);
+
+        CommentCreateDto request_3 = CommentCreateDto.builder()
+        .memberId(savedMember1.getMemberId())
+        .roundId(savedRound.getRoundId())
+        .content("comment3")
+        .build();
+        commentService.createComment(request_3);
+
+        // then
+        List<CommentsResponseDto> comments = 
+            commentRepository.findAllByRound_RoundId(savedRound.getRoundId());
+
+        assertThat(comments).extracting("Name").containsExactly("user", "user2", "user");
+    }
+
+    @Test
+    @DisplayName("댓글 페이지 가져오기")
+    void caseGetCommentsPage() { 
+         // given
+        Round round = Round.builder()
+            .likes(0)
+            .roundNum(1)
+            .name("회차1")
+            .content("내용")
+            .build();
+        Round savedRound = roundRepository.save(round);
+
+        Member member1 = Member.builder()
+            .email("user@email.com")
+            .name("user")
+            .password("1234")
+            .role(Role.USER)
+            .money(1000)
+            .build();
+        Member savedMember1= memberRepository.save(member1);
+
+        Member member2 = Member.builder()
+        .email("user@email.com")
+        .name("user2")
+        .password("1234")
+        .role(Role.USER)
+        .money(1000)
+        .build();
+        Member savedMember2 = memberRepository.save(member2);
+
+        CommentCreateDto request_1 = CommentCreateDto.builder()
+            .memberId(savedMember1.getMemberId())
+            .roundId(savedRound.getRoundId())
+            .content("comment1")
+            .build();
+        commentService.createComment(request_1);
+
+        CommentCreateDto request_2 = CommentCreateDto.builder()
+        .memberId(savedMember2.getMemberId())
+        .roundId(savedRound.getRoundId())
+        .content("comment2")
+        .build();
+        commentService.createComment(request_2);
+
+        CommentCreateDto request_3 = CommentCreateDto.builder()
+        .memberId(savedMember1.getMemberId())
+        .roundId(savedRound.getRoundId())
+        .content("comment3")
+        .build();
+        commentService.createComment(request_3);
+
+        // then
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<CommentsResponseDto> comments = 
+            commentRepository.findAllByRound_RoundId(savedRound.getRoundId(), pageable);
+
+        for (CommentsResponseDto comment : comments) {
+            System.out.println(comment.getName());
+            System.out.println(comment.getContent());
+        }
+
+        assertThat(comments).extracting("Name").containsExactly("user", "user2", "user");
     }
 }
