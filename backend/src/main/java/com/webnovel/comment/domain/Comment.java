@@ -31,13 +31,13 @@ public class Comment extends BaseEntity {
     private Long commentId;
 
     @ToString.Exclude
-    @ManyToOne(fetch = FetchType.EAGER) // 닉네임 즉시 가져옴
-    @JoinColumn(name = "member_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY) // 닉네임 즉시 가져옴
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "round_id", nullable = false)
+    @JoinColumn(name = "round_id")
     private Round round;
 
     @Column(columnDefinition = "TEXT", nullable = false) 
