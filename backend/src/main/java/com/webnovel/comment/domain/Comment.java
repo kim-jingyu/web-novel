@@ -31,7 +31,7 @@ public class Comment extends BaseEntity {
     private Long commentId;
 
     @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY) // 닉네임 즉시 가져옴
+    @ManyToOne(fetch = FetchType.LAZY) 
     @JoinColumn(name = "member_id")
     private Member member;
 

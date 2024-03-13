@@ -17,6 +17,7 @@ import com.webnovel.comment.dto.CommentsRequestDto;
 import com.webnovel.comment.dto.CommentsResponseDto;
 import com.webnovel.comment.exception.LengthOverException;
 import com.webnovel.comment.exception.LengthUnderException;
+import com.webnovel.comment.exception.PageOffsetException;
 import com.webnovel.member.domain.repository.MemberRepository;
 import com.webnovel.round.domain.repository.RoundRepository;
 
@@ -63,11 +64,17 @@ public class CommentService {
     }
 
     public Page<CommentsResponseDto> getCommentsPageWithName(CommentsPageRequestDto request) {
+        if (request.getOffset() < 0)
+            throw new PageOffsetException();
+
         Pageable pageable = PageRequest.of(request.getOffset(), 10);
         return commentRepository.findAllByRound_RoundId(request.getRoundId(), pageable);
     }
 
     public Page<Comment> getCommentsPage(CommentsPageRequestDto request) {
+        if (request.getOffset() < 0)
+            throw new PageOffsetException();
+
         Pageable pageable = PageRequest.of(request.getOffset(), 10);
         return commentRepository.findByRound_RoundId(request.getRoundId(), pageable);
     }
