@@ -22,4 +22,8 @@ public class MemberService {
         return memberRepository.findById(memberId)
                 .orElseThrow(MemberNonFoundException::new);
     }
+
+    public void removeMember(Long memberId) {
+        memberRepository.deleteById(memberId);
+    }
 }

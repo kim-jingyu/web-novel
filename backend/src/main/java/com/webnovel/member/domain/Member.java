@@ -1,6 +1,7 @@
 package com.webnovel.member.domain;
 
 import com.webnovel.global.entity.BaseEntity;
+import com.webnovel.login.domain.userinfo.OAuthUserInfo;
 import com.webnovel.recommend.domain.Recommend;
 import com.webnovel.recommend.domain.RecommendStatus;
 import jakarta.persistence.*;
@@ -23,10 +24,13 @@ public class Member extends BaseEntity {
     private String email;
 
     @Column(nullable = false)
-    private String name;
+    private String nickName;
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String imageUrl;
 
     @Enumerated
     private Role role;
@@ -41,7 +45,15 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recommend> recommends = new ArrayList<>();
 
-    public void updateName(String name) {
-        this.name = name;
+    public static Member createMember(OAuthUserInfo userInfo) {
+        return Member.builder()
+                .email(userInfo.getEmail())
+                .nickName(userInfo.getNickName())
+                .imageUrl(userInfo.getImageUrl())
+                .build();
+    }
+
+    public void updateNickName(String nickName) {
+        this.nickName = nickName;
     }
 }
