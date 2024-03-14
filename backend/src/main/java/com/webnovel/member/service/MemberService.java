@@ -17,4 +17,9 @@ public class MemberService {
         return memberRepository.findByEmail(email)
                 .orElseThrow(MemberNonFoundException::new);
     }
+
+    public Member findById(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(MemberNonFoundException::new);
+    }
 }
