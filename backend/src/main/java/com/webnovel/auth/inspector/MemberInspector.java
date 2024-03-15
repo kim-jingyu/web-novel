@@ -13,10 +13,10 @@ import java.util.Arrays;
 @Aspect
 @Component
 public class MemberInspector {
-    @Pointcut("@annotation(webnovel.auth.Member)")
-    private void memberPointCut() {}
+    @Pointcut("@annotation(com.webnovel.auth.Member)")
+    public void memberPoint() {}
 
-    @Before("memberPointCut()")
+    @Before("memberPoint()")
     public void inspect(JoinPoint joinPoint) {
         Arrays.stream(joinPoint.getArgs())
                 .filter(LoginMember.class::isInstance)
