@@ -2,6 +2,7 @@ package com.webnovel.subscribe.service;
 
 import java.util.Optional;
 
+import com.webnovel.novel.domain.dto.SubscribeAndViewDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,11 +31,14 @@ public class SubscribeService {
     public void doSubscribe(SubscribeActivateDto request) {
         Member member = memberRepository.getById(request.getMemberId());
         Novel novel = novelService.findByNovelId(request.getNovelId());
+        SubscribeAndViewDto subscribeAndViewDto = SubscribeAndViewDto.builder()
+                .novelId(request.getNovelId())
+                .build();
         subscribeRepository.findByMember_MemberIdAndNovel_NovelId(member.getMemberId(), novel.getNovelId())
             .ifPresentOrElse((result) -> {
                 throw new AlreadySubscribeException();
             }, () -> {
-                novelService.plusSubscribe(novel);
+                novelService.plusSubscribe(subscribeAndViewDto);
                 subscribeRepository.save(
                     Subscribe.creatSubscribe(member, novel)
                 );
@@ -45,9 +49,12 @@ public class SubscribeService {
     public void unSubscribe(SubscribeActivateDto request) {
         Member member = memberRepository.getById(request.getMemberId());
         Novel novel = novelService.findByNovelId(request.getNovelId());
+        SubscribeAndViewDto subscribeAndViewDto = SubscribeAndViewDto.builder()
+                .novelId(request.getNovelId())
+                .build();
         subscribeRepository.findByMember_MemberIdAndNovel_NovelId(member.getMemberId(), novel.getNovelId())
             .ifPresentOrElse((subscribe) -> {
-                novelService.plusSubscribe(novel);
+                novelService.plusSubscribe(subscribeAndViewDto);
                 subscribeRepository.delete(subscribe);
             }, () -> {
                 throw new SubscribeFailException();
