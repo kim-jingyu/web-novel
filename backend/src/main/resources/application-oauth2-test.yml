@@ -1,0 +1,17 @@
+oauth2:
+  provider:
+    google:
+      client-id: test
+      client-secret: test
+      redirect-uri: test
+      token-uri: test
+      resource-uri: test
+    kakao:
+      client-id: test
+      client-secret: test
+      redirect-uri: test
+      token-uri: test
+      resource-uri: test
+
+jwt:
+  secret-key: "mysecret-key-for-test"
