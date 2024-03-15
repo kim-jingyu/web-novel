@@ -13,7 +13,7 @@ import java.util.List;
 public class CreateGenreDto {
     private final Long genreId;
     @NotNull
-    private final Novel novel;
+    private final Long novelId;
     @NotNull
     private final List<GenreType> genreTypes;
 }
