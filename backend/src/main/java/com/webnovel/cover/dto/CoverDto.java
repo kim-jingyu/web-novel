@@ -1,5 +1,6 @@
-package com.webnovel.cover.domain;
+package com.webnovel.cover.dto;
 
+import com.webnovel.cover.domain.Cover;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
