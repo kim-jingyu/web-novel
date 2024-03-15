@@ -1,4 +1,7 @@
 spring:
+  mvc:
+    view:
+      suffix: .html
   datasource:
     url: jdbc:h2:mem:test
     username: sa
@@ -6,3 +9,6 @@ spring:
     driver-class-name: org.h2.Driver
   jpa:
     defer-datasource-initialization: true
+
+  profiles:
+    include: oauth2

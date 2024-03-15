@@ -1,6 +1,7 @@
 package com.webnovel.subscribe.domain;
 
 import com.webnovel.member.domain.Member;
+import com.webnovel.novel.domain.Novel;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -28,28 +29,20 @@ public class Subscribe {
  
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "member_id")
     private Member member;
 
-    // @ToString.Exclude
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "novel_id", nullable = false)
-    // private Novel novel;
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "novel_id")
+    private Novel novel;
 
-    public static Subscribe creatSubscribe(Member member /*, Novel novel*/) {
+    public static Subscribe creatSubscribe(Member member, Novel novel) {
         Subscribe subscribe = Subscribe.builder()
             .member(member)
-            /*.novel(novel)
-            */.build();
+            .novel(novel)
+            .build();
 
         return subscribe;
-    }
-
-    public void activate() {
-        //novel.doSubscribe();
-    }
-
-    public void deactivate() {
-        //novel.unSubscribe();
     }
 }
