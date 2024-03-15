@@ -1,11 +1,15 @@
 package com.webnovel.novel;
 
 import com.webnovel.genre.domain.service.GenreService;
+import com.webnovel.member.domain.Member;
+import com.webnovel.member.domain.Role;
+import com.webnovel.member.domain.repository.MemberRepository;
 import com.webnovel.novel.domain.Novel;
 import com.webnovel.novel.domain.dto.CreateNovelDto;
 import com.webnovel.novel.domain.dto.ModifyContentDto;
 import com.webnovel.novel.domain.dto.SubscribeAndViewDto;
 import com.webnovel.novel.domain.service.NovelService;
+import com.webnovel.recommend.domain.RecommendStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,13 +19,25 @@ public class NovelServiceTest {
     @Autowired
     NovelService novelService;
 
-
+    @Autowired
+    MemberRepository memberRepository;
 
     @Test
     void CreateTest(){
-        Novel novel = new Novel(3L,"qqqqq","wwwww");
+        Member member = Member.builder()
+                .email("user@email.com")
+                .password("1234")
+                .role(Role.USER)
+                .money(1000)
+                .imageUrl("asd")
+                .nickName("tlqkf")
+                .recommendStatus(RecommendStatus.ALREADY)
+                .build();
+        Member savedMember = memberRepository.save(member);
+
+        Novel novel = new Novel(savedMember,"aaa","eeee");
         CreateNovelDto createNovelDto = CreateNovelDto.builder()
-                .writerId(novel.getWriterId())
+                .memberId(novel.getMember().getMemberId())
                 .cover(novel.getCover())
                 .content(novel.getContent())
                 .build();
@@ -35,7 +51,7 @@ public class NovelServiceTest {
         Novel byNovelId = novelService.findByNovelId(1L);
         ModifyContentDto modifyContentDto = ModifyContentDto.builder()
                 .novelId(byNovelId.getNovelId())
-                .writerId(byNovelId.getWriterId())
+                .memberId(byNovelId.getMember().getMemberId())
                 .content(byNovelId.getContent())
                 .cover(byNovelId.getCover())
                 .build();
