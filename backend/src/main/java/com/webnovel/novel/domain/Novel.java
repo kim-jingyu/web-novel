@@ -1,12 +1,10 @@
 package com.webnovel.novel.domain;
 
 import com.webnovel.global.entity.BaseEntity;
+import com.webnovel.member.domain.Member;
 import com.webnovel.member.domain.Role;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Getter
@@ -15,8 +13,8 @@ import org.hibernate.annotations.ColumnDefault;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Novel extends BaseEntity {
 
-    public Novel(Long writerId, String cover, String content) {
-        this.writerId = writerId;
+    public Novel(Member member, String cover, String content) {
+        this.member = member;
         this.cover = cover;
         this.content = content;
     }
@@ -25,8 +23,10 @@ public class Novel extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long novelId;
 
-    @Column(nullable = false)
-    private Long writerId;
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Column(nullable = false)
     private String cover;

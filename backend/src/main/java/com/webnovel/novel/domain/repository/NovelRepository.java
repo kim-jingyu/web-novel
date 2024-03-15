@@ -11,12 +11,8 @@ import java.util.Optional;
 
 public interface NovelRepository extends JpaRepository<Novel , Long> {
 
-    List<Novel> findAllByWriterId(Long writerId);
+    List<Novel> findAllByMember_MemberId(Long writerId);
     Novel findByNovelId(Long novelId);
-    default Novel getById(Long novelId) {
-        return findById(novelId)
-                .orElseThrow(NovelNonFoundException::new);
-    }
 
 
 }
