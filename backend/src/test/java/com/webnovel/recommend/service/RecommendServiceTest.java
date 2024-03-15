@@ -8,6 +8,7 @@ import com.webnovel.recommend.domain.RecommendStatus;
 import com.webnovel.recommend.domain.repository.RecommendRepository;
 import com.webnovel.recommend.dto.RecommendCancelDto;
 import com.webnovel.recommend.dto.RecommendRequestDto;
+import com.webnovel.recommend.exception.AlreadyCancelException;
 import com.webnovel.recommend.exception.AlreadyRecommendException;
 import com.webnovel.round.domain.Round;
 import com.webnovel.round.domain.repository.RoundRepository;
@@ -46,7 +47,7 @@ class RecommendServiceTest {
 
         Member member = Member.builder()
                 .email("user@email.com")
-                .name("user")
+                .nickName("user")
                 .password("1234")
                 .role(Role.USER)
                 .money(1000)
@@ -80,7 +81,7 @@ class RecommendServiceTest {
 
         Member member = Member.builder()
                 .email("user@email.com")
-                .name("user")
+                .nickName("user")
                 .password("1234")
                 .role(Role.USER)
                 .money(1000)
@@ -112,7 +113,7 @@ class RecommendServiceTest {
 
         Member member = Member.builder()
                 .email("user@email.com")
-                .name("user")
+                .nickName("user")
                 .password("1234")
                 .role(Role.USER)
                 .money(1000)
@@ -150,20 +151,25 @@ class RecommendServiceTest {
 
         Member member = Member.builder()
                 .email("user@email.com")
-                .name("user")
+                .nickName("user")
                 .password("1234")
                 .role(Role.USER)
                 .money(1000)
                 .build();
         memberRepository.save(member);
 
-        RecommendRequestDto request = RecommendRequestDto.builder()
-                .roundId(1L)
-                .memberId(1L)
+        Recommend savedRecommend = recommendRepository.save(Recommend.createRecommend(member, round));
+
+        RecommendCancelDto request = RecommendCancelDto.builder()
+                .memberId(member.getMemberId())
+                .roundId(round.getRoundId())
+                .recommendId(savedRecommend.getRecommendId())
                 .build();
+        recommendService.cancelRecommend(request);
 
         // when
-        recommendService.recommend(request);
+        assertThatThrownBy(() -> recommendService.cancelRecommend(request))
+                .isInstanceOf(AlreadyCancelException.class);
     }
 
 
