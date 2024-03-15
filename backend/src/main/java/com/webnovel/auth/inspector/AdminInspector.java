@@ -13,7 +13,7 @@ import java.util.Arrays;
 @Aspect
 @Component
 public class AdminInspector {
-    @Pointcut("@annotation(webnovel.auth.Admin)")
+    @Pointcut("@annotation(com.webnovel.auth.Admin)")
     public void adminPointCut() {}
 
     @Before("adminPointCut()")
