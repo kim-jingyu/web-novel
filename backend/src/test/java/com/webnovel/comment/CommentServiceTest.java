@@ -1,19 +1,5 @@
 package com.webnovel.comment;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-
-import com.webnovel.member.domain.Member;
-import com.webnovel.member.domain.Role;
-import com.webnovel.member.domain.repository.MemberRepository;
-import com.webnovel.recommend.domain.repository.RecommendRepository;
-import com.webnovel.round.domain.Round;
-import com.webnovel.round.domain.repository.RoundRepository;
 import com.webnovel.comment.domain.Comment;
 import com.webnovel.comment.domain.repository.CommentRepository;
 import com.webnovel.comment.dto.CommentCreateDto;
@@ -23,13 +9,26 @@ import com.webnovel.comment.exception.CommentNotFoundException;
 import com.webnovel.comment.exception.LengthOverException;
 import com.webnovel.comment.exception.LengthUnderException;
 import com.webnovel.comment.service.CommentService;
+import com.webnovel.member.domain.Member;
+import com.webnovel.member.domain.Role;
+import com.webnovel.member.domain.repository.MemberRepository;
+import com.webnovel.recommend.domain.repository.RecommendRepository;
+import com.webnovel.round.domain.Round;
+import com.webnovel.round.domain.repository.RoundRepository;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import java.util.Random;
-import java.util.Optional;
-import java.util.List;
 
 @SpringBootTest
 public class CommentServiceTest {
@@ -58,7 +57,7 @@ public class CommentServiceTest {
 
         Member member = Member.builder()
             .email("user@email.com")
-            .name("user")
+            .nickName("user")
             .password("1234")
             .role(Role.USER)
             .money(1000)
@@ -93,7 +92,7 @@ public class CommentServiceTest {
 
         Member member = Member.builder()
             .email("user@email.com")
-            .name("user")
+            .nickName("user")
             .password("1234")
             .role(Role.USER)
             .money(1000)
@@ -131,7 +130,7 @@ public class CommentServiceTest {
 
         Member member = Member.builder()
             .email("user@email.com")
-            .name("user")
+            .nickName("user")
             .password("1234")
             .role(Role.USER)
             .money(1000)
@@ -163,7 +162,7 @@ public class CommentServiceTest {
 
         Member member = Member.builder()
             .email("user@email.com")
-            .name("user")
+            .nickName("user")
             .password("1234")
             .role(Role.USER)
             .money(1000)
@@ -195,7 +194,7 @@ public class CommentServiceTest {
 
         Member member = Member.builder()
             .email("user@email.com")
-            .name("user")
+            .nickName("user")
             .password("1234")
             .role(Role.USER)
             .money(1000)
@@ -237,7 +236,7 @@ public class CommentServiceTest {
 
         Member member = Member.builder()
             .email("user@email.com")
-            .name("user")
+            .nickName("user")
             .password("1234")
             .role(Role.USER)
             .money(1000)
@@ -279,7 +278,7 @@ public class CommentServiceTest {
 
         Member member1 = Member.builder()
             .email("user@email.com")
-            .name("user")
+            .nickName("user")
             .password("1234")
             .role(Role.USER)
             .money(1000)
@@ -288,7 +287,7 @@ public class CommentServiceTest {
 
         Member member2 = Member.builder()
         .email("user@email.com")
-        .name("user2")
+        .nickName("user2")
         .password("1234")
         .role(Role.USER)
         .money(1000)
@@ -337,7 +336,7 @@ public class CommentServiceTest {
 
         Member member1 = Member.builder()
             .email("user@email.com")
-            .name("user")
+            .nickName("user")
             .password("1234")
             .role(Role.USER)
             .money(1000)
@@ -346,7 +345,7 @@ public class CommentServiceTest {
 
         Member member2 = Member.builder()
         .email("user@email.com")
-        .name("user2")
+        .nickName("user2")
         .password("1234")
         .role(Role.USER)
         .money(1000)
