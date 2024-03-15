@@ -1,0 +1,28 @@
+<included>
+    <appender name="ERROR_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/error/${BY_DATE}.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                ${PID:-} --- [%15.15thread] %-40.40logger{36} %msg%n%n
+                [REQUEST_ID] : %X{REQUEST_ID:-NO REQUEST ID}%n
+                [REQUEST_METHOD] : %X{REQUEST_METHOD:-NO REQUEST METHOD}%n
+                [REQUEST_URL] : %X{REQUEST_URI:-NO REQUEST URI}%n
+                [REQUEST_TIME] : %d{yyyy-MM-dd HH:mm:ss.SSS}%n
+                [REQUEST_IP] : %X{REQUEST_IP:-NO REQUEST IP}%n
+            </Pattern>
+            <charset>utf8</charset>
+        </layout>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/error.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>20MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+</included>

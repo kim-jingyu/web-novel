@@ -11,4 +11,4 @@ spring:
     defer-datasource-initialization: true
 
   profiles:
-    include: oauth2
+    include: oauth2-test
