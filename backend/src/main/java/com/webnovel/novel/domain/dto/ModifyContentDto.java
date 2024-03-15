@@ -9,7 +9,7 @@ import lombok.Data;
 public class ModifyContentDto {
     @NotNull
     private final Long novelId;
-    private final Long writerId;
+    private final Long memberId;
     private final String content;
     private final String cover;
 }

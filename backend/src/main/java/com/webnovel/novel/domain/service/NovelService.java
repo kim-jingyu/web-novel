@@ -1,6 +1,8 @@
 package com.webnovel.novel.domain.service;
 
 import com.webnovel.comment.exception.LengthOverException;
+import com.webnovel.member.domain.Member;
+import com.webnovel.member.domain.repository.MemberRepository;
 import com.webnovel.novel.domain.Novel;
 import com.webnovel.novel.domain.dto.CreateNovelDto;
 import com.webnovel.novel.domain.dto.ModifyContentDto;
@@ -21,10 +23,12 @@ import java.util.List;
 public class NovelService {
     @Autowired
     private final NovelRepository novelRepository;
+    private final MemberRepository memberRepository;
 
 
-    public NovelService(NovelRepository novelRepository) {
+    public NovelService(NovelRepository novelRepository, MemberRepository memberRepository) {
         this.novelRepository = novelRepository;
+        this.memberRepository = memberRepository;
     }
 
     public Novel findByNovelId(Long novelId){
@@ -35,9 +39,9 @@ public class NovelService {
         return byNovelId;
     }
 
-    public List<Novel> findByWriterId(Long writerId){
-        List<Novel> allByWriterId = novelRepository.findAllByWriterId(writerId);
-        return allByWriterId;
+    public List<Novel> findByMemberId(Long writerId){
+        List<Novel> allByMemberId = novelRepository.findAllByMember_MemberId(writerId);
+        return allByMemberId;
     }
 
     public void save(Novel novel){
@@ -54,7 +58,8 @@ public class NovelService {
             throw new CoverNotFoundException();
         }
 
-        Novel novel = new Novel(createNovelDto.getWriterId(),
+        Member byId = memberRepository.getById(createNovelDto.getMemberId());
+        Novel novel = new Novel(byId,
                 createNovelDto.getCover(), createNovelDto.getContent());
         save(novel);
         return novel;
