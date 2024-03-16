@@ -19,7 +19,7 @@ public class RoundResponseDto {
     public static RoundResponseDto of(Round round) {
         return RoundResponseDto.builder()
                 .roundNum(round.getRoundNum())
-                .name(round.getName())
+                .name(round.getTitle())
                 .content(round.getContent())
                 .likes(round.getLikes())
                 .recommends(round.getRecommends())
