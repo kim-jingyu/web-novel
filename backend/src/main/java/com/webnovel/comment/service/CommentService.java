@@ -1,7 +1,6 @@
 package com.webnovel.comment.service;
 
 import com.webnovel.comment.dto.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,11 +26,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class CommentService {
-    @Autowired
     private MemberRepository memberRepository;
-    @Autowired
     private RoundRepository roundRepository;
-    @Autowired
     private CommentRepository commentRepository;
 
     @Transactional

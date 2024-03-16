@@ -38,27 +38,30 @@
      private CommentService commentService;
 
      @GetMapping("create")
-     public ResponseEntity<CommentResponseDto> createComment(CommentCreateDto request) {
+     public ResponseEntity<CommentResponseDto> getMethodName(@RequestParam CommentCreateDto request) {
          return ResponseEntity
-                 .status(OK)
-                 .body(commentService.createComment(request));
+             .status(OK)
+             .body(commentService.createComment(request));
      }
 
      @GetMapping("delete")
-     public ResponseEntity<Void> deleteComment(CommentDeleteDto request) {
+     public ResponseEntity<CommentResponseDto> getMethodName(@RequestParam CommentDeleteDto request) {
+         var response = CommentResponseDto.builder()
+             .commentId(0L)
+             .build();
          commentService.deleteComment(request);
 
          return ResponseEntity
-                 .status(HttpStatus.OK)
-                 .body(null);
+             .status(HttpStatus.OK)
+             .body(response);
      }
 
      @GetMapping("read")
-     public ResponseEntity<Page<CommentsResponseDto>> readComments(CommentsRequestDto request, @PageableDefault(size = 10) Pageable pageable) {
+     public ResponseEntity<Page<CommentsResponseDto>> getMethodName(@RequestParam CommentsRequestDto request, @PageableDefault(size = 10) Pageable pageable) {
          var response = commentService.getCommentsPageWithName(request, pageable);
 
          return ResponseEntity
-                 .status(OK)
-                 .body(response);
+             .status(OK)
+             .body(response);
      }
  }
