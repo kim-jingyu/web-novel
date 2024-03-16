@@ -1,6 +1,7 @@
 package com.webnovel.round.domain;
 
 import com.webnovel.global.entity.BaseEntity;
+import com.webnovel.novel.domain.Novel;
 import com.webnovel.recommend.domain.Recommend;
 import com.webnovel.round.dto.RoundCreateDto;
 import jakarta.persistence.*;
@@ -8,8 +9,6 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static lombok.Builder.*;
 
 @Entity
 @Getter
@@ -30,13 +29,16 @@ public class Round extends BaseEntity {
     @Lob
     private String content;
 
-    @Default
+    @Builder.Default
     private int likes = 0;
 
-    @Default
+    @Builder.Default
     @ToString.Exclude
     @OneToMany(mappedBy = "round", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recommend> recommends = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Novel novel;
 
     public static Round createRound(RoundCreateDto request, int roundNum) {
         return Round.builder()
