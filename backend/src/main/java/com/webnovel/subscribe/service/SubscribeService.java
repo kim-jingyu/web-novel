@@ -3,6 +3,7 @@ package com.webnovel.subscribe.service;
 import java.util.Optional;
 
 import com.webnovel.novel.domain.dto.SubscribeAndViewDto;
+import com.webnovel.subscribe.dto.SubscribeDeactivateDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +47,7 @@ public class SubscribeService {
     }
 
     @Transactional
-    public void unSubscribe(SubscribeActivateDto request) {
+    public void unSubscribe(SubscribeDeactivateDto request) {
         Member member = memberRepository.getById(request.getMemberId());
         Novel novel = novelService.findByNovelId(request.getNovelId());
         SubscribeAndViewDto subscribeAndViewDto = SubscribeAndViewDto.builder()
