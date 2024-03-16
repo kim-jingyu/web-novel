@@ -10,4 +10,6 @@ public class RoundCreateDto {
     @Size(max = 50, message = "타이틀은 50자 이상 입력할 수 없습니다.")
     private String title;
     private String content;
+    @NotBlank(message = "설정할 작품 정보는 필수입니다.")
+    private Long novelId;
 }

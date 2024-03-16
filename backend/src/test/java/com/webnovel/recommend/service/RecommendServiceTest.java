@@ -40,7 +40,7 @@ class RecommendServiceTest {
         Round round = Round.builder()
                 .likes(0)
                 .roundNum(1)
-                .name("회차1")
+                .title("회차1")
                 .content("내용")
                 .build();
         Round savedRound = roundRepository.save(round);
@@ -74,7 +74,7 @@ class RecommendServiceTest {
         Round round = Round.builder()
                 .likes(0)
                 .roundNum(1)
-                .name("회차1")
+                .title("회차1")
                 .content("내용")
                 .build();
         Round savedRound = roundRepository.save(round);
@@ -106,7 +106,7 @@ class RecommendServiceTest {
         Round round = Round.builder()
                 .likes(0)
                 .roundNum(1)
-                .name("회차1")
+                .title("회차1")
                 .content("내용")
                 .build();
         Round savedRound = roundRepository.save(round);
@@ -144,7 +144,7 @@ class RecommendServiceTest {
         Round round = Round.builder()
                 .likes(0)
                 .roundNum(1)
-                .name("회차1")
+                .title("회차1")
                 .content("내용")
                 .build();
         roundRepository.save(round);
