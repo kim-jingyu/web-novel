@@ -13,6 +13,10 @@ import com.webnovel.recommend.domain.RecommendStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @SpringBootTest
 public class NovelServiceTest {
@@ -76,5 +80,14 @@ public class NovelServiceTest {
                 .novelId(1L)
                 .build();
         novelService.plusView(subscribeAndViewDto);
+    }
+
+    @Test
+    void Sorted() {
+        Sort sort = Sort.by(Sort.Order.desc("view"));
+        Pageable pageable = PageRequest.of(0,4,sort);
+        Page<Novel> allSorted = novelService.findAllSorted(pageable);
+        System.out.println("allSorted.getContent() = " + allSorted.getContent());
+        allSorted.forEach(a -> System.out.println("allSorted = " + a.getNovelId()));
     }
 }

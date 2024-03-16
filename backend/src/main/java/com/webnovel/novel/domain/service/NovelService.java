@@ -13,6 +13,8 @@ import com.webnovel.novel.domain.exception.NotFoundNovelException;
 import com.webnovel.novel.domain.exception.UnderBoundaryException;
 import com.webnovel.novel.domain.repository.NovelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +31,14 @@ public class NovelService {
     public NovelService(NovelRepository novelRepository, MemberRepository memberRepository) {
         this.novelRepository = novelRepository;
         this.memberRepository = memberRepository;
+    }
+
+    public Page<Novel> findAllSorted(Pageable pageable){
+        return novelRepository.findAll(pageable);
+    }
+
+    public Page<Novel> findAllNoSorted(Pageable pageable){
+        return novelRepository.findAll(pageable);
     }
 
     public Novel findByNovelId(Long novelId){
