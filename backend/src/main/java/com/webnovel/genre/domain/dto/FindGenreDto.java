@@ -11,6 +11,6 @@ public class FindGenreDto {
     @NotNull
     private final Long novelId;
     @NotNull
-    GenreType genreTypes;
+    String genreTypes;
 
 }

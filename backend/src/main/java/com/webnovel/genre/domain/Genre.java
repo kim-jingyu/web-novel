@@ -15,16 +15,17 @@ import java.util.List;
 public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long GenreId;
+    private Long genreId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "novel_id", nullable = false)
     private Novel novel;
 
     @Column
-    private List<GenreType> genreTypes;
+    @Convert(converter = GenreTypeAttributeConverter.class)
+    private String genreTypes;
 
-    public Genre(Novel novel, List<GenreType> genreTypes) {
+    public Genre(Novel novel, String genreTypes) {
         this.novel = novel;
         this.genreTypes = genreTypes;
     }

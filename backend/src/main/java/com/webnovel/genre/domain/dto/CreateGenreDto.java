@@ -15,5 +15,5 @@ public class CreateGenreDto {
     @NotNull
     private final Long novelId;
     @NotNull
-    private final List<GenreType> genreTypes;
+    private final String genreTypes;
 }
