@@ -22,13 +22,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true")) 
     @Query("select new com.webnovel.comment.dto.CommentsResponseDto(m.memberId, c.commentId, c.round.roundId, m.nickName, c.content)"
         + "from Comment c left join Member m on c.member.memberId = m.memberId and c.round.roundId =:roundId")
-    List<CommentsResponseDto> findAllByRound_RoundId(@Param("roundId") Long roundId);
-
-    List<Comment> findByRound_RoundId(Long roundId);
-
-    @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true")) 
-    @Query("select new com.webnovel.comment.dto.CommentsResponseDto(m.memberId, c.commentId, c.round.roundId, m.nickName, c.content)"
-        + "from Comment c left join Member m on c.member.memberId = m.memberId and c.round.roundId =:roundId")
     Page<CommentsResponseDto> findAllByRound_RoundId(@Param("roundId") Long roundId, Pageable pageable);
 
     Page<Comment> findByRound_RoundId(Long roundId, Pageable pageable);

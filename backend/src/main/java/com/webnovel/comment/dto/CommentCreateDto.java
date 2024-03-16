@@ -9,9 +9,9 @@ import lombok.Data;
 @Builder
 public class CommentCreateDto {
     @NotNull
-    private final Long memberId;
+    private Long memberId;
     @NotNull
-    private final Long roundId;
+    private Long roundId;
     @NotEmpty
-    private final String content;
+    private String content;
 }

@@ -8,5 +8,5 @@ import lombok.Data;
 @Builder
 public class CommentsRequestDto {
     @NotNull
-    private final Long roundId;
+    private Long roundId;
 }

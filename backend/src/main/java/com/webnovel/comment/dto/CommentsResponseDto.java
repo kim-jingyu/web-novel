@@ -4,19 +4,20 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @Builder
 public class CommentsResponseDto {
     @NotNull
-    private final Long memberId;
+    private Long memberId;
     @NotNull
-    private final Long commentId;
+    private Long commentId;
     @NotNull
-    private final Long roundId;
+    private Long roundId;
     @NotEmpty
-    private final String name;
+    private String name;
     @NotEmpty
-    private final String content;
+    private String content;
 
 }

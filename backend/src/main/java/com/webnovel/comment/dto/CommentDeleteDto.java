@@ -8,7 +8,7 @@ import lombok.Data;
 @Builder
 public class CommentDeleteDto {
     @NotNull
-    private final Long commentId;
+    private Long commentId;
     @NotNull
-    private final Long memberId;
+    private Long memberId;
 }
