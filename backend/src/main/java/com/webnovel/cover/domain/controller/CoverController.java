@@ -35,12 +35,12 @@ public class CoverController {
 
 
     //이미지 업로드
-    @PostMapping("/{writerId}/{novelId}/img")
-    public void coverUpload(@PathVariable long writerId
+    @PostMapping("/{memberId}/{novelId}/img")
+    public void coverUpload(@PathVariable long memberId
             ,@PathVariable long novelId,
             @RequestParam("cover") MultipartFile cover) throws IOException{
         Novel byNovelId = novelService.findByNovelId(novelId);
-        coverService.changeNameAndSaveCover(cover, byNovelId, writerId);
+        coverService.changeNameAndSaveCover(cover, byNovelId, memberId);
     }
 
     //이미지 출력

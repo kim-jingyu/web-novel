@@ -39,7 +39,7 @@ public class CoverService {
         return coverRepository.findByNovel_NovelId(novelId);
     }
 
-    public void changeNameAndSaveCover(MultipartFile cover, Novel novel, Long writerId) throws IOException {
+    public void changeNameAndSaveCover(MultipartFile cover, Novel novel, Long memberId) throws IOException {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();
@@ -64,7 +64,7 @@ public class CoverService {
                 file = new File(absolutePath + path + "/" + newFileName + fileExtension);
                 cover.transferTo(file);
 
-                CoverDto coverDto = new CoverDto(writerId, novel,newFileName + fileExtension,absolutePath+path);
+                CoverDto coverDto = new CoverDto(memberId, novel,newFileName + fileExtension,absolutePath+path);
 
                 saveCover(coverDto);
             }

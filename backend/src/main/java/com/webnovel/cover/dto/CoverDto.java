@@ -13,14 +13,14 @@ import org.springframework.stereotype.Service;
 @NoArgsConstructor
 public class CoverDto {
 
-    private Long writerId;
+    private Long memberId;
     private Novel novel;
     private String imgName;
     private String imgPath;
 
     public Cover toEntity() {
         Cover build = Cover.builder()
-                .writerId(writerId)
+                .memberId(memberId)
                 .novel(novel)
                 .imgName(imgName)
                 .imgPath(imgPath)
@@ -29,8 +29,8 @@ public class CoverDto {
     }
 
     @Builder
-    public CoverDto (Long writerId, Novel novel , String imageName, String imagePath) {
-        this.writerId = writerId;
+    public CoverDto (Long memberId, Novel novel , String imageName, String imagePath) {
+        this.memberId = memberId;
         this.novel = novel;
         this.imgName = imageName;
         this.imgPath = imagePath;

@@ -16,7 +16,7 @@ public class Cover {
     private Long imgId;
 
     @Column
-    private Long writerId;
+    private Long memberId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="novel_Id")
@@ -28,8 +28,8 @@ public class Cover {
     private String imgPath;  //저장경로
 
     @Builder
-    public Cover(Long writerId, Novel novel,String imgName, String imgPath) {
-        this.writerId = writerId;
+    public Cover(Long memberId, Novel novel,String imgName, String imgPath) {
+        this.memberId = memberId;
         this.novel = novel;
         this.imgName = imgName;
         this.imgPath = imgPath;
