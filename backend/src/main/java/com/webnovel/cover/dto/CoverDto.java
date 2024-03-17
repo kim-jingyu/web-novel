@@ -1,6 +1,7 @@
 package com.webnovel.cover.dto;
 
 import com.webnovel.cover.domain.Cover;
+import com.webnovel.novel.domain.Novel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,14 +14,14 @@ import org.springframework.stereotype.Service;
 public class CoverDto {
 
     private Long writerId;
-    private Long novelId;
+    private Novel novel;
     private String imgName;
     private String imgPath;
 
     public Cover toEntity() {
         Cover build = Cover.builder()
                 .writerId(writerId)
-                .novelId(novelId)
+                .novel(novel)
                 .imgName(imgName)
                 .imgPath(imgPath)
                 .build();
@@ -28,9 +29,9 @@ public class CoverDto {
     }
 
     @Builder
-    public CoverDto (Long writerId, Long novelId ,String imageName,String imagePath) {
+    public CoverDto (Long writerId, Novel novel , String imageName, String imagePath) {
         this.writerId = writerId;
-        this.novelId = novelId;
+        this.novel = novel;
         this.imgName = imageName;
         this.imgPath = imagePath;
     }

@@ -3,6 +3,8 @@ package com.webnovel.cover.domain.controller;
 import com.webnovel.cover.domain.Cover;
 import com.webnovel.cover.dto.CoverDto;
 import com.webnovel.cover.domain.service.CoverService;
+import com.webnovel.novel.domain.Novel;
+import com.webnovel.novel.domain.service.NovelService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -25,19 +27,20 @@ import java.time.temporal.ChronoField;
 @RequestMapping("/cover")
 public class CoverController {
 
-    private final CoverService coverService;
-
     @Autowired
-    public CoverController(CoverService coverService) {
-        this.coverService = coverService;
-    }
+    private CoverService coverService;
+    @Autowired
+    private NovelService novelService;
+
+
 
     //이미지 업로드
     @PostMapping("/{writerId}/{novelId}/img")
     public void coverUpload(@PathVariable long writerId
             ,@PathVariable long novelId,
             @RequestParam("cover") MultipartFile cover) throws IOException{
-        coverService.changeNameAndSaveCover(cover, novelId, writerId);
+        Novel byNovelId = novelService.findByNovelId(novelId);
+        coverService.changeNameAndSaveCover(cover, byNovelId, writerId);
     }
 
     //이미지 출력

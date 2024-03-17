@@ -1,5 +1,6 @@
 package com.webnovel.cover.domain;
 
+import com.webnovel.novel.domain.Novel;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -16,17 +17,20 @@ public class Cover {
 
     @Column
     private Long writerId;
-    @Column
-    private Long novelId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="novel_Id")
+    private Novel novel;
+
     @Column
     private String imgName;  //저장되는 파일명
     @Column
     private String imgPath;  //저장경로
 
     @Builder
-    public Cover(Long writerId, Long novelId,String imgName, String imgPath) {
+    public Cover(Long writerId, Novel novel,String imgName, String imgPath) {
         this.writerId = writerId;
-        this.novelId = novelId;
+        this.novel = novel;
         this.imgName = imgName;
         this.imgPath = imgPath;
     }

@@ -3,6 +3,7 @@ package com.webnovel.cover.domain.service;
 import com.webnovel.cover.domain.Cover;
 import com.webnovel.cover.dto.CoverDto;
 import com.webnovel.cover.domain.repository.CoverRepository;
+import com.webnovel.novel.domain.Novel;
 import com.webnovel.novel.domain.exception.ContentNotFoundException;
 import com.webnovel.novel.domain.exception.CoverNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,10 @@ public class CoverService {
     }
 
     public Cover findByNovelId(Long novelId) {
-        return coverRepository.findByNovelId(novelId);
+        return coverRepository.findByNovel_NovelId(novelId);
     }
 
-    public void changeNameAndSaveCover(MultipartFile cover, Long novelId, Long writerId) throws IOException {
+    public void changeNameAndSaveCover(MultipartFile cover, Novel novel, Long writerId) throws IOException {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();
@@ -63,7 +64,7 @@ public class CoverService {
                 file = new File(absolutePath + path + "/" + newFileName + fileExtension);
                 cover.transferTo(file);
 
-                CoverDto coverDto = new CoverDto(writerId, novelId,newFileName + fileExtension,absolutePath+path);
+                CoverDto coverDto = new CoverDto(writerId, novel,newFileName + fileExtension,absolutePath+path);
 
                 saveCover(coverDto);
             }
