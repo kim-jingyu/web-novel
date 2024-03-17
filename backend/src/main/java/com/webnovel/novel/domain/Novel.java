@@ -24,7 +24,7 @@ public class Novel extends BaseEntity {
     private Long novelId;
 
     @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
